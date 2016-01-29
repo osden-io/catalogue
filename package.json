@@ -4,7 +4,8 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node .",
-    "pretest": "jshint ."
+    "pretest": "jshint .",
+    "test": "node test/*.test.js"
   },
   "dependencies": {
     "compression": "^1.0.3",
