@@ -1,6 +1,6 @@
 # Osden Catalogue
 
-https://api.shippable.com/projects/56ae6f2c1895ca4474730c4a/badge/master
+![Build Status](https://api.shippable.com/projects/56ae6f2c1895ca4474730c4a/badge/master)
 
 To run: 
 
