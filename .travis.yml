@@ -1,3 +1,4 @@
+build_environment: strongloop/node
 language: node_js
 node_js:
-  - "0.10"
+  - "5.4"
