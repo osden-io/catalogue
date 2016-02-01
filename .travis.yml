@@ -1,6 +1,6 @@
 build_environment: strongloop/node
 language: node_js
 node_js:
-  - "5.4"
+  - "0.10"
 script:
   - npm test
