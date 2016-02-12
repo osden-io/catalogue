@@ -1,6 +1,6 @@
-build_environment: strongloop/node
+build_environment: node
 language: node_js
 node_js:
-  - "0.10"
+  - "5.5"
 script:
   - npm test /home/osden/catalogue/
