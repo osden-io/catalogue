@@ -18,7 +18,7 @@
   :generators [[duct/generators "0.5.8"]]
   :duct {:ns-prefix catalogue}
   :main ^:skip-aot catalogue.main
-  :target-path "target/%s/"
+  :target-path "buildoutput/%s/"
   :uberjar-name "catalogue.jar"
   :aliases {"gen"   ["generate"]
             "setup" ["do" ["generate" "locals"]]}

@@ -5,7 +5,5 @@ lein: lein2
 before_script:
   - mkdir -p shippable/buildoutput
 
-script:
-
 after_script:
-  - cp -vr target/uberjar/catalogue.jar ./shippable/buildoutput/catalogue.jar
+  - cp -v buildoutput/uberjar/catalogue.jar ./shippable/buildoutput/catalogue.jar
