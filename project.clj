@@ -19,12 +19,13 @@
   :duct {:ns-prefix catalogue}
   :main ^:skip-aot catalogue.main
   :target-path "buildoutput/%s/"
+  :uberjar-name "catalogue.jar"
   :aliases {"gen"   ["generate"]
             "setup" ["do" ["generate" "locals"]]}
   :profiles
   {:dev  [:project/dev  :profiles/dev]
    :test [:project/test :profiles/test]
-   :uberjar {:aot :all :env {:port 3000}}
+   :uberjar {:aot :all}
    :profiles/dev  {}
    :profiles/test {}
    :project/dev   {:dependencies [[reloaded.repl "0.2.1"]
