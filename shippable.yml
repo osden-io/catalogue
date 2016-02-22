@@ -4,12 +4,12 @@ lein: lein2
 
 before_script:
   - mkdir -p buildoutput
-  - mkdir -p testresults
-  - mkdir -p codecoverage
-
+  - mkdir -p shippable/testresults
+  - mkdir -p shippable/codecoverage
+  
 script:
   - lein test
   - lein uberjar
 
 after_script:
-  - cp -v buildoutput/catalogue-0.0.1-SNAPSHOT-standalone.jar ./shippable/buildoutput/catalogue.jar
+  - cp -v buildoutput/uberjar/catalogue-0.0.1-SNAPSHOT-standalone.jar ./shippable/buildoutput/catalogue.jar
