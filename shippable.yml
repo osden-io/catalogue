@@ -6,7 +6,7 @@ install:
   - lein deps
 
 before_script:
-  - mkdir -p buildoutput
+  - mkdir -p shippable/buildoutput/uberjar
   - mkdir -p shippable/testresults
   - mkdir -p shippable/codecoverage
   
