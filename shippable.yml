@@ -2,8 +2,11 @@ build_environment: clojure
 language: clojure
 lein: lein2
 
+install:
+  - lein deps
+
 before_script:
-  - mkdir -p shippable/buildoutput
+  - mkdir -p buildoutput
   - mkdir -p shippable/testresults
   - mkdir -p shippable/codecoverage
   
