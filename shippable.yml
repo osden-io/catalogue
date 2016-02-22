@@ -1,6 +1,4 @@
-build_environment: node
-language: node_js
-node_js:
-  - "5.5"
+build_environment: clojure
+language: clojure
+lein: lein2
 script:
-  - npm test /home/osden/catalogue/
