@@ -6,4 +6,4 @@ before_script:
   - mkdir -p shippable/buildoutput
 
 after_script:
-  - cp -v buildoutput/uberjar/catalogue.jar ./shippable/buildoutput/catalogue.jar
+  - cp -v buildoutput/catalogue.jar ./shippable/buildoutput/catalogue.jar
