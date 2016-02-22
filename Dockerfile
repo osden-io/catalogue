@@ -1,6 +1,7 @@
 FROM clojure
 MAINTAINER Joel Gregory <joel@osden.io>
 ENV PORT 8080
-ADD ./buildoutput/catalogue.jar /srv/catalogue.jar
+ADD . /home/osden/catalogue
+WORKDIR /home/osden/catalogue
 EXPOSE 8080
-CMD ["java", "-jar", "/srv/catalogue.jar"]
+CMD ["java", "-jar", "/home/osden/catalogue/target/uberjar/catalogue.jar"]
