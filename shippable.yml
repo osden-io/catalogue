@@ -2,8 +2,12 @@ build_environment: clojure
 language: clojure
 lein: lein2
 
-#before_script:
-#  - mkdir -p shippable/buildoutput
+before_script:
+  - mkdir -p shippable/buildoutput
 
-#after_script:
-#  - cp -v buildoutput/catalogue.jar ./shippable/buildoutput/catalogue.jar
+script:
+  - lein test
+  - lein uberjar
+
+after_script:
+  - cp -v buildoutput/catalogue-0.0.1-SNAPSHOT-standalone.jar ./shippable/buildoutput/catalogue.jar

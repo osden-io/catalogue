@@ -1,4 +1,4 @@
-(defproject catalogue "0.1.0-SNAPSHOT"
+(defproject catalogue "0.0.1-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"
@@ -19,7 +19,6 @@
   :duct {:ns-prefix catalogue}
   :main ^:skip-aot catalogue.main
   :target-path "buildoutput/%s/"
-  :uberjar-name "catalogue.jar"
   :aliases {"gen"   ["generate"]
             "setup" ["do" ["generate" "locals"]]}
   :profiles
