@@ -3,7 +3,9 @@ language: clojure
 lein: lein2
 
 before_script:
-  - mkdir -p shippable/buildoutput
+  - mkdir -p buildoutput
+  - mkdir -p testresults
+  - mkdir -p codecoverage
 
 script:
   - lein test
