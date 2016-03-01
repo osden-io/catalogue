@@ -6,14 +6,17 @@
             [meta-merge.core :refer [meta-merge]]
             [ring.component.jetty :refer [jetty-server]]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
+            [ring.middleware.cors :refer [wrap-cors]]
             [catalogue.endpoint.files :refer [files-endpoint]]
             [catalogue.endpoint.example :refer [example-endpoint]]))
 
 (def base-config
   {:app {:middleware [[wrap-not-found :not-found]
-                      [wrap-defaults :defaults]]
+                      [wrap-defaults :defaults]
+                      [wrap-cors :allow]]
          :not-found  "Resource Not Found"
-         :defaults   (meta-merge api-defaults {})}})
+         :defaults   (meta-merge api-defaults {})
+         :allow      #".*"}}) ;; change this later!!!!
 
 (defn new-system [config]
   (let [config (meta-merge base-config config)]

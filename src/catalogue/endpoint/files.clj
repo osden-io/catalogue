@@ -46,6 +46,7 @@
            :tags ["files"]
 
            (GET "/catalogue" []
+                (println "catalogue request received")
                 (let [contents (files)]
                   :return  [Catalogue]
                   :summary "returns all files"
@@ -55,8 +56,8 @@
                                        :contact {
                                                  :email "lee.hellen@landsolution.com.au"
                                                  :telephone "07332933982"
-                                                 }
-                                       :files contents}})))
+                                                 }}
+                       :files contents})))
            
            (GET "/catalogue/files" []
                 :return  [File]

@@ -10,6 +10,7 @@
                  [meta-merge "0.1.1"]
                  [ring "1.4.0"]
                  [ring/ring-defaults "0.1.5"]
+                 [jumblerg/ring.middleware.cors "1.0.1"]
                  [ring-jetty-component "0.3.0"]
                  [metosin/compojure-api "1.0.0"]
                  [prismatic/schema "1.0.5"]]
