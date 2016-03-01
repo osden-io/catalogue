@@ -3,7 +3,8 @@
            [ring.util.http-response :refer :all]
            [compojure.api.sweet :refer :all]
            [schema.core :as s]
-           [monger.collection :as mc]))
+           [monger.collection :as mc])
+  (:import org.bson.types.ObjectId))
 
 (s/defschema File
  {:id s/Str
@@ -16,9 +17,12 @@
                             :telephone s/Str}}
   :files [File]})
 
+;; TODO exceptions etc
 (defn get-files [db]
-   (mc/find-maps db "files" {}))
+  (let [files (map #(dissoc % :_id) (mc/find-maps db "files" {}))]
+    files))
 
+;; TODO db? Where should this data be kept as it is fairly static
 (defn get-catalogue [db]
   (let [files (get-files db)]
     (assoc {:id "land-solution"

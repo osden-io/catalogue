@@ -36,5 +36,6 @@
                                   [kerodon "0.7.0"]]
                    :source-paths ["dev"]
                    :repl-options {:init-ns user}
-                   :env {:port 3000}}
+                   :env {:port 3000
+                         :mongo-url "mongodb://localhost:27017/catalogue-dev"}}
    :project/test  {}})
