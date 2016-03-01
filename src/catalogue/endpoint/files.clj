@@ -2,7 +2,8 @@
   (:require [clojure.java.io :as io]
            [ring.util.http-response :refer :all]
            [compojure.api.sweet :refer :all]
-           [schema.core :as s]))
+           [schema.core :as s]
+           [monger.collection :as mc]))
 
 (s/defschema File
  {:id s/Str
@@ -15,26 +16,18 @@
                             :telephone s/Str}}
   :files [File]})
 
-(defn files []
-  [
-   {
-    :id "xxx0"
-    :location {:latitude -28.73 :longitude 153.467864}
-    }
-   {
-    :id "xxx1"
-    :location {:latitude -28.74 :longitude 153.467864}
-    }
-   {:id "xxx2"
-    :location {:latitude -28.75 :longitude 153.467864}
-    }
-   {:id "xxx3"
-    :location {:latitude -28.76 :longitude 153.467864}
-    }
-   ])
+(defn get-files [db]
+   (mc/find-maps db "files" {}))
 
+(defn get-catalogue [db]
+  (let [files (get-files db)]
+    (assoc {:id "land-solution"
+            :owner-details {:name "Land Solution"
+                            :contact {:email "lee.hellen@landsolution.com.au"
+                                      :telephone "07332933982"}}}
+      :files files)))
 
-(defn files-endpoint [config]
+(defn files-endpoint [{db :db}]
  (api
   {:swagger
    {:ui "/api-docs"
@@ -46,45 +39,11 @@
            :tags ["files"]
 
            (GET "/catalogue" []
-                (println "catalogue request received")
-                (let [contents (files)]
-                  :return  [Catalogue]
-                  :summary "returns all files"
-                  (ok {
-                       :id "land-solution"
-                       :owner-details {:name "Land Solution"
-                                       :contact {
-                                                 :email "lee.hellen@landsolution.com.au"
-                                                 :telephone "07332933982"
-                                                 }}
-                       :files contents})))
+                :return  Catalogue
+                :summary "returns the entire catalogue"         
+                (ok (get-catalogue (:db db))))
            
            (GET "/catalogue/files" []
                 :return  [File]
                 :summary "returns all files"
-                (ok (files)  ))
-           
-           ;; (GET* "/user/:id"  []
-           ;;       :return      User
-           ;;       :path-params [id :- String]
-           ;;       :summary     "returns the user with a given id"
-           ;;       (ok (db/get-users {:id id} (:db config))))
-
-           ;; (POST* "/authenticate" []
-           ;;        :return         Boolean
-           ;;        :body-params    [user :- User]
-           ;;        :summary        "authenticates the user using the id and pass."
-           ;;        (ok (db/authenticate user (:db config))))
-           
-           ;; (POST* "/user"      []
-           ;;        :return      Long
-           ;;        :body-params [user :- User]
-           ;;        :summary     "creates a new user record."
-           ;;        (ok (db/create-user-account! user (:db config))))
-           
-           ;; (DELETE* "/user"    []
-           ;;        :return      Long
-           ;;        :body-params [id :- String]
-           ;;        :summary     "deletes the user record with the given id."
-           ;;        (ok (db/delete-user! {:id id} (:db config))))
-           )))
+                (ok (get-files (:db db)))))))

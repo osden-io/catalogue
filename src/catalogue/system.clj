@@ -8,7 +8,8 @@
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
             [ring.middleware.cors :refer [wrap-cors]]
             [catalogue.endpoint.files :refer [files-endpoint]]
-            [catalogue.endpoint.example :refer [example-endpoint]]))
+            [catalogue.endpoint.example :refer [example-endpoint]]
+            [catalogue.component.mongo :refer [new-mongo-db]]))
 
 (def base-config
   {:app {:middleware [[wrap-not-found :not-found]
@@ -23,10 +24,11 @@
     (-> (component/system-map
          :app  (handler-component (:app config))
          :http (jetty-server (:http config))
+         :db (new-mongo-db (-> config :db :uri))
          :example (endpoint-component example-endpoint)
          :files (endpoint-component files-endpoint))
         (component/system-using
          {:http [:app]
           :app  [:files :example]
-          :files []
+          :files [:db]
           :example []}))))
