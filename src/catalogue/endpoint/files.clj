@@ -43,8 +43,10 @@
            :tags ["files"]
 
            (GET "/catalogue" []
+                (println "catalogue")
+                (println db)
                 :return  Catalogue
-                :summary "returns the entire catalogue"         
+                :summary "returns the entire catalogue"
                 (ok (get-catalogue (:db db))))
            
            (GET "/catalogue/files" []
