@@ -1,10 +1,9 @@
 (ns catalogue.endpoint.files
   (:require [clojure.java.io :as io]
-           [ring.util.http-response :refer :all]
-           [compojure.api.sweet :refer :all]
-           [schema.core :as s]
-           [monger.collection :as mc])
-  (:import org.bson.types.ObjectId))
+            [ring.util.http-response :refer :all]
+            [compojure.api.sweet :refer :all]
+            [schema.core :as s]
+            [monger.collection :as mc]))
 
 (s/defschema File
  {:id s/Str
@@ -43,8 +42,6 @@
            :tags ["files"]
 
            (GET "/catalogue" []
-                (println "catalogue")
-                (println db)
                 :return  Catalogue
                 :summary "returns the entire catalogue"
                 (ok (get-catalogue (:db db))))

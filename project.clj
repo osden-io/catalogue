@@ -14,7 +14,8 @@
                  [ring-jetty-component "0.3.0"]
                  [metosin/compojure-api "1.0.0"]
                  [prismatic/schema "1.0.5"]
-                 [com.novemberain/monger "3.0.2"]]
+                 [com.novemberain/monger "3.0.2"]
+                 [cheshire "5.5.0"]]
   :plugins [[lein-environ "1.0.2"]
             [lein-gen "0.2.2"]]
   :generators [[duct/generators "0.5.8"]]
@@ -33,7 +34,8 @@
                                   [org.clojure/tools.namespace "0.2.11"]
                                   [org.clojure/tools.nrepl "0.2.12"]
                                   [eftest "0.1.0"]
-                                  [kerodon "0.7.0"]]
+                                  [kerodon "0.7.0"]
+                                  [ring/ring-mock "0.3.0"]]
                    :source-paths ["dev"]
                    :repl-options {:init-ns user}
                    :env {:port 3000
