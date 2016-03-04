@@ -9,11 +9,14 @@
  {:id s/Str
   :location {:latitude Double :longitude Double }})
 
+(s/defschema Detail
+  {:id s/Str
+   :owner {:name s/Str
+           :contact {:email s/Str
+                     :telephone s/Str}}})
+
 (s/defschema Catalogue
- {:id s/Str
-  :owner-details {:name s/Str
-                  :contact {:email s/Str
-                            :telephone s/Str}}
+ {:detail Detail
   :files [File]})
 
 ;; TODO exceptions etc
@@ -28,7 +31,9 @@
 (defn get-catalogue [db]
   (let [files (get-files db)
         catalogue-detail (get-catalogue-detail db)]
-    (assoc catalogue-detail :files files)))
+    (assoc {}
+      :detail catalogue-detail
+      :files files)))
 
 (defn files-endpoint [{db :db}]
  (api
@@ -45,6 +50,11 @@
                 :return  Catalogue
                 :summary "returns the entire catalogue"
                 (ok (get-catalogue (:db db))))
+
+           (GET "/catalogue/detail" []
+                :return  Detail
+                :summary "returns the entire catalogue"
+                (ok (get-catalogue-detail (:db db))))
            
            (GET "/catalogue/files" []
                 :return  [File]

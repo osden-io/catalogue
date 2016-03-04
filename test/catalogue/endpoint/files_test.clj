@@ -15,9 +15,9 @@
 (defn insert-detail-stub [db]
   (mc/insert-and-return (:db @db) "detail"
              {:id "land-solution"
-              :owner-details {:name "Land Solution"
-                              :contact {:email "lee.hellen@landsolution.com.au"
-                                        :telephone "07332933982"}}}))
+              :owner {:name "Land Solution"
+                      :contact {:email "lee.hellen@landsolution.com.au"
+                                :telephone "07332933982"}}}))
 
 (defn remove-setup [db]
   (mc/remove (:db @db) "detail" {}))
@@ -52,10 +52,18 @@
         (has (status? 200) "files resource does not exist"))))
 
 (deftest catalogue-test
-  (testing "catalogue resource returns correct information"
+  (testing "GET catalogue resource returns entire catalogue"
     (let [response ((handler @db) (mock/request :get "/api/catalogue"))
           body (parse-body (:body response))]
       (is (= (response :status) 200))
       (is (= (get-in response [:headers "Content-Type"])
              "application/json; charset=utf-8"))
-      (is (= [:id :owner-details :files] (keys body))))))
+      (is (= [:detail :files] (keys body)))))
+
+  (testing "GET catalogue detail resource returns correct information"
+    (let [response ((handler @db) (mock/request :get "/api/catalogue/detail"))
+          body (parse-body (:body response))]
+      (is (= (response :status) 200))
+      (is (= (get-in response [:headers "Content-Type"])
+             "application/json; charset=utf-8"))
+      (is (= [:id :owner] (keys body))))))
