@@ -21,14 +21,14 @@
   (let [files (map #(dissoc % :_id) (mc/find-maps db "files" {}))]
     files))
 
-;; TODO db? Where should this data be kept as it is fairly static
+(defn get-catalogue-detail [db]
+  (let [detail (dissoc (mc/find-one-as-map db "detail" {}) :_id)]
+     detail))
+
 (defn get-catalogue [db]
-  (let [files (get-files db)]
-    (assoc {:id "land-solution"
-            :owner-details {:name "Land Solution"
-                            :contact {:email "lee.hellen@landsolution.com.au"
-                                      :telephone "07332933982"}}}
-      :files files)))
+  (let [files (get-files db)
+        catalogue-detail (get-catalogue-detail db)]
+    (assoc catalogue-detail :files files)))
 
 (defn files-endpoint [{db :db}]
  (api

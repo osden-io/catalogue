@@ -6,19 +6,33 @@
             [catalogue.endpoint.files :as files]
             [catalogue.component.mongo :refer [new-mongo-db]]
             [monger.core :as mg]
+            [monger.collection :as mc]
             [ring.mock.request :as mock]
             [cheshire.core :as cheshire]))
 
 (def db (atom {}))
 
+(defn insert-detail-stub [db]
+  (mc/insert-and-return (:db @db) "detail"
+             {:id "land-solution"
+              :owner-details {:name "Land Solution"
+                              :contact {:email "lee.hellen@landsolution.com.au"
+                                        :telephone "07332933982"}}}))
+
+(defn remove-setup [db]
+  (mc/remove (:db @db) "detail" {}))
+
 (use-fixtures :once
   (fn [f]
     (reset! db (component/start (new-mongo-db)))
-    (f)))
+    (f)
+    (component/stop @db)))
 
 (use-fixtures :each
   (fn [f]
-    (f)))
+    (insert-detail-stub db)
+    (f)
+    (remove-setup db)))
 
 (defn handler [db]
   (files/files-endpoint {:db db}))
