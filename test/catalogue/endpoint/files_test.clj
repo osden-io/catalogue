@@ -69,4 +69,8 @@
       (is (= [:id :owner] (keys body)))))
 
   (testing "db-find does not throw null pointer exceptions"
-    (files/db-find (handler @db) nil nil)))
+    (files/db-find nil nil nil))
+
+  (testing "db-find-one does not throw null pointer exceptions"
+    (files/db-find-one nil nil nil))))
+
