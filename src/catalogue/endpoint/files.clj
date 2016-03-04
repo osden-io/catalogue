@@ -28,16 +28,24 @@
   (-> (mc/find-one-as-map db coll query)
       (dissoc :_id)))
 
+(defn db-insert-one [db coll data]
+  (-> (mc/insert-and-return db coll data)
+      (dissoc :_id)))
+
 (defn get-files [db]
   (db-find db "files" {}))
 
 (with-handler! #'db-find
   java.lang.Exception
-  (fn [e & args] (println e)))
+  (fn [e & args]
+    (;; TODO logging
+     println "error")))
 
 (with-handler! #'db-find-one
   java.lang.Exception
-  (fn [e & args] (println e)))
+  (fn [e & args]
+    (;; TODO logging
+     println "error")))
 
 (defn get-catalogue-detail [db]
   (db-find-one db "detail" {}))
@@ -49,16 +57,19 @@
       :detail catalogue-detail
       :files files)))
 
+(defn insert-file [db file]
+  (db-insert-one db "files" file))
+
 (defn files-endpoint [{db :db}]
  (api
   {:swagger
-   {:ui "/api-docs"
+   {:ui "/"
     :spec "swagger.json"
     :data {:info {:title "Catalogue API"
                     :description "Spatial Data Files"}
              :tags [{:name "api"}]}}}
   (context "/api" []
-           :tags ["files"]
+           :tags ["api"]
 
            (GET "/catalogue" []
                 :return  Catalogue
@@ -67,10 +78,16 @@
 
            (GET "/catalogue/detail" []
                 :return  Detail
-                :summary "returns the entire catalogue"
+                :summary "returns the catalogue meta data"
                 (ok (get-catalogue-detail (:db db))))
            
            (GET "/catalogue/files" []
                 :return  [File]
-                :summary "returns all files"
-                (ok (get-files (:db db)))))))
+                :summary "returns all files in the catalogue"
+                (ok (get-files (:db db))))
+
+           (POST "/catalogue/file" []
+                 :return File
+                 :body [file File]
+                 :summary "creates a new file in the catalogue"
+                 (ok (insert-file (:db db) file))))))

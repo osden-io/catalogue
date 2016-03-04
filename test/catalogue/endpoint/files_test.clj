@@ -10,7 +10,7 @@
             [ring.mock.request :as mock]
             [cheshire.core :as cheshire]))
 
-(def db-component (atom {}))
+(def db-component (atom nil))
 
 (def detail-stub {:id "land-solution"
                   :owner {:name "Land Solution"
@@ -79,7 +79,31 @@
       (is (= (response :status) 200))
       (is (= (get-in response [:headers "Content-Type"])
              "application/json; charset=utf-8"))
-      (is (= detail-stub body)))))
+      (is (= detail-stub body))))
+
+  (testing "GET catalogue files resource returns all files"
+    (let [response ((handler @db-component) (mock/request :get "/api/catalogue/files"))
+          body (parse-body (:body response))]
+      (is (= (response :status) 200))
+      (is (= (get-in response [:headers "Content-Type"])
+             "application/json; charset=utf-8"))
+      (is (= files-stub body)))))
+
+(deftest post-file
+  (testing "POST catalogue file insert a file into the database and returns it"
+    (let [file {:id "xxx"
+                :location {:latitude -23.12
+                           :longitude 154.234}}
+          response ((handler @db-component)
+                    (-> (mock/request :post "/api/catalogue/file"
+                                      (cheshire/generate-string file))
+                        (mock/content-type "application/json")))
+          body (parse-body (:body response))]
+      (is (= 200 (response :status)))
+      (is (= "application/json; charset=utf-8"
+             (get-in response [:headers "Content-Type"])))
+      (is (= file body))
+      (is (= file (dissoc (mc/find-one-as-map (:db @db-component) "files" file) :_id))))))
 
 (deftest db-methods
   (testing "db-find does not return mongo _id"
