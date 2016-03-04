@@ -8,7 +8,8 @@
             [monger.core :as mg]
             [monger.collection :as mc]
             [ring.mock.request :as mock]
-            [cheshire.core :as cheshire]))
+            [cheshire.core :as cheshire]
+            [catalogue.config :as config]))
 
 (def db-component (atom nil))
 
@@ -36,7 +37,9 @@
 
 (use-fixtures :once
   (fn [f]
-    (reset! db-component (component/start (new-mongo-db)))
+    (reset! db-component
+            (component/start
+             (new-mongo-db (get-in config/environ [:db :uri]))))
     (f)
     (component/stop @db-component)))
 

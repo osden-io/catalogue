@@ -2,6 +2,9 @@ build_environment: clojure
 language: clojure
 lein: lein2
 
+env:
+  - secure: puWxcx3ojgDtoRJKmxd9/GuW2lC3F6l1TfmZ2qN+3MTjAGgU8iVIcEaqg/kt1bpQsgkGJWweEEuN8CyP1PiyYzcEh60Vv0jy07YDSSD/6p2CeGbPtSSv1uHlXvpChmAp6o9GqPy8OJJVJsw9A9KXxTMCxe/JDKWV7+tqEp6gUL4OP/vO9i28JOtVOKqNlmg7q+y5lNaLrjFjtC6ueymQRj+BHierkcfzCkZ7wbgCqqw+SY2499ylqYc94MfTHd7gcDmBbpx5KlUaDUUk7U7f4iJNBrHRMJG+LhWKrMANj2ucNnb+6UkopZPRctohk93FJJQEHcQZFAH3lfikINb8aA==
+
 install:
   - lein deps
 
