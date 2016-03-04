@@ -66,4 +66,7 @@
       (is (= (response :status) 200))
       (is (= (get-in response [:headers "Content-Type"])
              "application/json; charset=utf-8"))
-      (is (= [:id :owner] (keys body))))))
+      (is (= [:id :owner] (keys body)))))
+
+  (testing "db-find does not throw null pointer exceptions"
+    (files/db-find (handler @db) nil nil)))

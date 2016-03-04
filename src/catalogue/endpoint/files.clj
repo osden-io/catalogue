@@ -3,7 +3,8 @@
             [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
             [schema.core :as s]
-            [monger.collection :as mc]))
+            [monger.collection :as mc]
+            [dire.core :refer [with-handler!]]))
 
 (s/defschema File
  {:id s/Str
@@ -19,14 +20,27 @@
  {:detail Detail
   :files [File]})
 
-;; TODO exceptions etc
+(defn db-find [db coll query]
+  (->> (mc/find-maps db coll query)
+       (map #(dissoc % :_id))))
+
+(defn db-find-one [db coll query]
+  (-> (mc/find-one-as-map db coll query)
+      (dissoc :_id)))
+
 (defn get-files [db]
-  (let [files (map #(dissoc % :_id) (mc/find-maps db "files" {}))]
-    files))
+  (db-find db "files" {}))
+
+(with-handler! #'db-find
+  java.lang.Exception
+  (fn [e & args] (println e)))
+
+(with-handler! #'db-find-one
+  java.lang.Exception
+  (fn [e & args] (println e)))
 
 (defn get-catalogue-detail [db]
-  (let [detail (dissoc (mc/find-one-as-map db "detail" {}) :_id)]
-     detail))
+  (db-find-one db "detail" {}))
 
 (defn get-catalogue [db]
   (let [files (get-files db)
