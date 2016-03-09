@@ -13,10 +13,8 @@ build:
         - lein test
         - lein uberjar
 
-    on_success:
-        - cp -v buildoutput/uberjar/catalogue-0.0.1-SNAPSHOT-standalone.jar ./shippable/buildoutput/uberjar/catalogue-0.0.1-SNAPSHOT-standalone.jar
-
     post_ci:
+        - cp -v buildoutput/uberjar/catalogue-0.0.1-SNAPSHOT-standalone.jar ./shippable/buildoutput/uberjar/catalogue-0.0.1-SNAPSHOT-standalone.jar
         - docker build -t osden/catalogue:tag .
         - docker push osden/catalogue:tag
 
