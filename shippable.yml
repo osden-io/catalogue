@@ -20,8 +20,8 @@ build:
 
     integrations:
     hub:
-      - integrationName: osden-docker
-        type: docker
+      - integrationName: osden-aws-ecr
+        type: ecr
         branches:
           only:
             - master
