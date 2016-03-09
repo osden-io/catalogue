@@ -19,9 +19,9 @@ build:
         - docker push osden/catalogue:tag
 
     integrations:
-    hub:
-      - integrationName: osden-docker
-        type: docker
-        branches:
-          only:
-            - master
+        hub:
+            - integrationName: osden-docker
+              type: docker
+              branches:
+                only:
+                  - master
