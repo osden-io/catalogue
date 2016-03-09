@@ -17,8 +17,8 @@ build:
         - cp -v buildoutput/uberjar/catalogue-0.0.1-SNAPSHOT-standalone.jar ./shippable/buildoutput/uberjar/catalogue-0.0.1-SNAPSHOT-standalone.jar
 
     push:
-        - docker build -t osden/catalogue:tag .
-        - docker push osden/catalogue:tag
+        #- docker build -t osden/catalogue:tag .
+        #- docker push osden/catalogue:tag
 
 integrations:
     hub:
