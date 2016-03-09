@@ -15,13 +15,15 @@ build:
 
     post_ci:
         - cp -v buildoutput/uberjar/catalogue-0.0.1-SNAPSHOT-standalone.jar ./shippable/buildoutput/uberjar/catalogue-0.0.1-SNAPSHOT-standalone.jar
+
+    push:
         - docker build -t osden/catalogue:tag .
         - docker push osden/catalogue:tag
 
-    integrations:
-        hub:
-            - integrationName: osden-docker
-              type: docker
-              branches:
-                only:
+integrations:
+    hub:
+        - integrationName: osden-docker
+          type: docker
+          branches:
+              only:
                   - master
