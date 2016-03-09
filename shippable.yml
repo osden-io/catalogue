@@ -20,7 +20,7 @@ build:
 
     integrations:
     hub:
-      - integrationName: osden/
+      - integrationName: osden-docker
         type: docker
         branches:
           only:
